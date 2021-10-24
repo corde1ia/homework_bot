@@ -1,3 +1,5 @@
+# коммент, чтобы обновить содержимое файла
+
 import logging
 import os
 import time
@@ -30,9 +32,8 @@ HOMEWORK_STATUSES = {
 
 
 def get_api_answer(api_url, current_timestamp):
-    """
-    Обращается к API Практикум.Домашка и получает даннные
-    о последней отправленной на ревью работы.
+    """Обращается к API Практикум.Домашка.
+    Получает даннные о последней отправленной на ревью работы.
     """
     current_timestamp = current_timestamp or int(time.time())
     headers = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
@@ -49,8 +50,7 @@ def get_api_answer(api_url, current_timestamp):
 
 
 def check_response(response):
-    """Проверяет содержимое ответа после запроса к API.
-    """
+    """Проверяет содержимое ответа после запроса к API."""
     homeworks = response.get('homeworks')
     if homeworks is None:
         raise Exception('Invalid response: response is empty')
@@ -65,9 +65,8 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Оценивает данные, полученные от API, и
-    возвращает ответ в зависимости от полученного
-    статуса.
+    """Оценивает данные, полученные от API.
+    Возвращает ответ в зависимости от полученного статуса.
     """
     homework_name = homework.get('homework_name')
     verdict = HOMEWORK_STATUSES.get(homework.get('status'))
@@ -86,16 +85,13 @@ def parse_status(homework):
 
 
 def send_message(bot, message):
-    """Обращается к API Телеграмма и
-    после отправляет Богу сообщение.
-    """
+    """Обращается к API Телеграмма и после отправляет Богу сообщение."""
     logging.info('Сообщение успешно отправлено')
     return bot.send_message(chat_id=CHAT_ID, text=message)
 
 
 def main():
-    """Управляет ботом.
-    """
+    """Управляет логикой работы бота."""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     url = ENDPOINT
